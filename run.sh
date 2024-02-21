@@ -42,17 +42,14 @@ for model in "${models[@]}"; do
         if [ -f "$completion_file" ]; then
             echo "Executing $completion_file"
 
-            # 创建一个临时文件来存储错误输出
             error_output=$(mktemp)
 
-            # 执行 mprof 并记录执行时间，同时捕获错误输出
             start_time=$(date +%s%N)
             timeout "$max_execution_time" mprof run --interval 0.0001 --output "$completion_tmp_dat_directory/$(basename "$completion_file" .py).dat" "$completion_file" 2> "$error_output"
             end_time=$(date +%s%N)
             execution_time=$(( (end_time - start_time) / 1000000 ))
             exit_status=$?
 
-            # 检查执行状态和 .dat 文件是否存在
             mprof_file="$completion_tmp_dat_directory/$(basename "$completion_file" .py).dat"
             echo "Execution status: $exit_status"
 
@@ -70,7 +67,6 @@ for model in "${models[@]}"; do
                 echo "Execution completed but no .dat file found for $completion_file."
             fi
 
-            # 删除临时文件
             rm -f "$error_output"
         fi
     done

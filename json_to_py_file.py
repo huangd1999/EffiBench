@@ -88,7 +88,7 @@ def extract_function_name(code_snippet):
     return function_name
 
 def comment_out_print_statements(code):
-    # 使用正则表达式查找并注释掉print函数调用
+
     commented_code = re.sub(r'print\s*\([^)]*\)', '# \g<0>', code)
     return commented_code
 
@@ -123,7 +123,7 @@ def replace_test_case_function_name(test_cases, new_function_name):
     return modified_test_cases
 
 def execute_code(code, i):
-    # 创建一个局部上下文字典，包含所需的导入
+
     context = {'List': List, 'Dict': Dict, 'Any': Any, 'Optional': Optional, 'Tuple': Tuple, 'Union': Union, 'Callable': Callable}
     timeout = 3
     try:

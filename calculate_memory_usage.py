@@ -3,13 +3,14 @@ import os
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
-# 计算内存使用的函数
+
+
 def calculate_memory_usage(dat_file_path):
     with open(dat_file_path, 'r') as file:
         prev_time = 0
         prev_mem_mb = 0
         mem_time_mb_s = 0
-        next(file)  # 跳过第一行（如果有表头的话）
+        next(file)
         for line in file:
             parts = line.split()
             mem_in_mb = float(parts[1])
@@ -40,7 +41,7 @@ def report_max_memory_usage(dat_file_path):
         prev_time = 0
         prev_mem_mb = 0
         mem_time_mb_s = 0
-        next(file)  # 跳过第一行（如果有表头的话）
+        next(file)
         for line in file:
             parts = line.split()
             mem_in_mb = float(parts[1])
@@ -51,7 +52,6 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# 设置 Seaborn 的风格
 sns.set(style="whitegrid")
 
 
@@ -59,52 +59,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def analyze_value_distribution(values, num_buckets, title_suffix, model_name):
-    # 计算值的范围
-    value_min = np.min(values)
-    value_max = np.max(values)
-    value_range = value_max - value_min
-
-    # 计算每个桶的大小
-    bucket_edges = np.linspace(value_min, value_max, num_buckets + 1)
-
-    # 使用 np.histogram 直接计算桶
-    bucket_counts, _ = np.histogram(values, bins=bucket_edges)
-
-    # 生成桶标签
-    bucket_labels = [f"{(edge_left + edge_right) / 2:.2f}" for edge_left, edge_right in zip(bucket_edges[:-1], bucket_edges[1:])]
-
-    # 设置图表大小
-    plt.figure(figsize=(12, 6))
-
-    # 使用 Seaborn 绘制条形图，并获取条形对象
-    barplot = sns.barplot(x=bucket_labels, y=bucket_counts, palette="viridis")
-
-    # 在每个柱形上添加 y 轴数值
-    for bar in barplot.patches:
-        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), f'{int(bar.get_height())}', 
-                 ha='center', va='bottom')
-
-    # 仅显示特定的 x 轴坐标
-    selected_indices = [0, num_buckets-1]  # 对应于第 1, 5, 10, 15, 20 个坐标
-    selected_labels = [bucket_labels[i] for i in selected_indices]
-    plt.xticks(selected_indices, selected_labels)
-
-    # 设置 y 轴为对数刻度
-    plt.yscale('log')
-
-    # 标注轴
-    plt.ylabel('Count')
-
-    # 图表标题
-    plt.title(f'{title_suffix}')
-
-    # 使用紧凑布局来适应标签
-    plt.tight_layout()
-
-    # 保存图表为文件
-    plt.savefig(f"figures/{model_name}_{title_suffix.replace(' ', '_').lower()}_distribution.pdf")
-    plt.close()
 
 
 
@@ -328,15 +282,6 @@ for model in global_result.keys():
     normalized_max_memory_usage /= len(normalized_execution_time_list)
     normalized_memory_usage /= len(normalized_execution_time_list)
     pass1 = len(normalized_execution_time_list)/1000*100
-
-
-    # ranges = 100
-    # analyze_value_distribution(list(completion_memory_usage.values()), ranges, 'Completion Memory Usage',model)
-    # analyze_value_distribution(list(execution_time.values()), ranges, 'Execution Time',model)
-    # analyze_value_distribution(list(max_memory_usage.values()), ranges, 'Max Memory Usage',model)
-    # analyze_value_distribution(normalized_execution_time_list, ranges, 'Normalized Execution Time',model)
-    # analyze_value_distribution(normalized_max_memory_usage_list, ranges, 'Normalized Max Memory Usage',model)
-    # analyze_value_distribution(normalized_memory_usage_list, ranges, 'Normalized Memory Usage',model)
 
 
     # print(f"Total Execution Time of {model}: {total_execution_time:.1f} seconds")
