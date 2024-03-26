@@ -79,12 +79,8 @@ for task in global_task_idx:
         if idx in problem_idxs:
             total_dict[task["task"]] += 1
 
-# model_list = ["incoder-1B","incoder-6B","starcoder","codegen-2B-mono","codegen-6B-mono","Magicoder-S-CL-7B","Magicoder-S-DS-6.7B","WizardCoder-15B-V1.0","instructcodet5p-16b","Mistral-7B-Instruct-v0.2","Mistral-7B-v0.1", "CodeLlama-7b-Python-hf", "CodeLlama-13b-Python-hf","gpt-3.5-turbo-0301","gpt-3.5-turbo-0613","gpt-3.5-turbo-1106","gpt-4-1106-preview","gpt-4", "palm-2-chat-bison","claude-instant-1","gemini-pro"]
-# model_list = ["gpt-3.5-turbo-0301_0","gpt-3.5-turbo-0301_1","gpt-3.5-turbo-0301_2","gpt-3.5-turbo-0301_3","gpt-3.5-turbo-0301_4","gpt-3.5-turbo-0301_5"]
-# tests_number = [10,"100_1",1000]
-# model_list = ["incoder-1B","incoder-6B","starcoder","codegen-2B-mono","codegen-6B-mono","Magicoder-S-CL-7B","Magicoder-S-DS-6.7B","WizardCoder-15B-V1.0","instructcodet5p-16b","Mistral-7B-Instruct-v0.2","Mistral-7B-v0.1", "CodeLlama-7b-Python-hf", "CodeLlama-13b-Python-hf"]
-model_list = ["gpt-3.5-turbo-0301_0","gpt-3.5-turbo-0301_1","gpt-3.5-turbo-0301_2","gpt-3.5-turbo-0301_3","gpt-3.5-turbo-0301_4","gpt-3.5-turbo-0301_5"]
-# model_list = [f"{model}_{test}" for model in model_list for test in tests_number]
+model_list = ["incoder-1B","incoder-6B","starcoder","codegen-2B-mono","codegen-6B-mono","Magicoder-S-CL-7B","Magicoder-S-DS-6.7B","WizardCoder-15B-V1.0","instructcodet5p-16b","Mistral-7B-Instruct-v0.2","Mistral-7B-v0.1", "CodeLlama-7b-Python-hf", "CodeLlama-13b-Python-hf","gpt-3.5-turbo-0301","gpt-3.5-turbo-0613","gpt-3.5-turbo-1106","gpt-4-1106-preview","gpt-4", "palm-2-chat-bison","claude-instant-1","gemini-pro"]
+
 canonical_solution_directory = "./canonical_solution"
 canonical_solution_memory_usage = {}
 canonical_solution_execution_time = {}
@@ -101,21 +97,6 @@ for dat_file in glob.glob(os.path.join(canonical_solution_directory, "*.dat")):
 print(len(canonical_solution_memory_usage.keys()))
 
 global_result = {}
-
-# for model in model_list:
-#     completion_memory_usage = {}
-#     execution_time = {}
-#     max_memory_usage = {}
-#     task_idx = {}
-#     dat_directory = f"./{model}"
-#     for dat_file in glob.glob(os.path.join(dat_directory, "*.dat")):
-#         problem_idx = os.path.basename(dat_file).split('.')[0]
-#         completion_memory_usage[int(problem_idx)] = calculate_memory_usage(dat_file)
-#         execution_time[int(problem_idx)] = calculate_runtime(dat_file)
-#         max_memory_usage[int(problem_idx)] = report_max_memory_usage(dat_file)
-#         task_idx[int(problem_idx)] = dat_file
-
-#     global_result[model] = {"completion_memory_usage":completion_memory_usage,"execution_time":execution_time,"max_memory_usage":max_memory_usage,"task_idx":task_idx}
 model_task_idx_sets = []
 for model in model_list:
     completion_memory_usage = {}
@@ -123,7 +104,7 @@ for model in model_list:
     max_memory_usage = {}
     task_idx = {}
     dat_directory = f"./{model}"
-    model_task_idx_set = set()  # 当前模型的task_idx集合
+    model_task_idx_set = set()
     
     for dat_file in glob.glob(os.path.join(dat_directory, "*.dat")):
         problem_idx = os.path.basename(dat_file).split('.')[0]
@@ -134,21 +115,18 @@ for model in model_list:
             max_memory_usage[idx] = report_max_memory_usage(dat_file)
             task_idx[idx] = dat_file
             
-            # 添加当前problem_idx到集合中
             model_task_idx_set.add(idx)
         except ValueError:
-            # 跳过不能转换为整数的problem_idx
             pass
     
-    # 将当前模型的task_idx集合添加到列表中
     model_task_idx_sets.append(model_task_idx_set)
     
     global_result[model] = {"completion_memory_usage": completion_memory_usage, "execution_time": execution_time, "max_memory_usage": max_memory_usage, "task_idx": task_idx}
 
-# 第二步: 计算所有模型task_idx集合的交集
+
 common_task_idxs = set.intersection(*model_task_idx_sets)
 
-# 第三步: 过滤global_result中的每个模型，只保留交集中的task_idx
+
 for model in model_list:
     model_data = global_result[model]
     filtered_data = {key: {idx: value for idx, value in model_data[key].items() if idx in common_task_idxs} for key in model_data}
