@@ -14,16 +14,10 @@ cd EffiBench
 pip install -r requirements.txt
 ```
 
-## convert json to py file
+## code execution to obtain exeuction time and memory usage .dat
 
 ```py
-python json_to_py_file.py
-```
-
-## execute py file and save execution dat
-
-```bash
-bash run.sh
+python code_efficiency_calculator.py
 ```
 
 ## report efficiency metrics

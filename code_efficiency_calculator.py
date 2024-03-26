@@ -191,29 +191,12 @@ if __name__ == "__main__":
         with open(f"./dataset_full_test_case.json", "r") as f:
             leetcode = json.load(f)
 
-        dict_problem_idx = {}
-
-        for i in range(len(leetcode)):
-            dict_problem_idx[leetcode[i]["problem_idx"]] = i
-
-        for i in range(len(dataset)):
-            try:
-                dataset[i]["full_test_case"] = leetcode[dict_problem_idx[dataset[i]["problem_idx"]]]["full_test_case"]
-            except:
-                # remove dataset[i]
-                dataset[i] = None
-
-        # for i in range(len(leetcode)):
-        #     dataset[i]["full_test_case"] = leetcode[i]["full_test_case"]
-        # remove files in ./tmp/
         if not os.path.exists(f'./{model}'):
             os.makedirs(f'./{model}')
         files = glob.glob(f'./{model}/*')
         for f in files:
             os.remove(f)
         fetch_completion(dataset,model)
-        # for i in range(len(dataset)):
-        #     print(calculate_code_execution_efficiency(dataset[i]),path=model)
         execution_times[model] = time.time() - start
     print(execution_times)
 
