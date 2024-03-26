@@ -33,13 +33,13 @@ python calculate_memory_usage.py
 ```
 
 
-## :page_facing_up: Citation 
+<!-- ## :page_facing_up: Citation 
 If you found our work useful or inspiring, please consider citing:
 ```
 @article{huang2024effibench,
   title={EffiBench: Benchmarking the Efficiency of Automatically Generated Code},
-  author={Huang, Dong and Zhang, Jie M and Qing, Yuhao and Cui, Heming},
+  author={Anomou},
   journal={arXiv preprint arXiv:2402.02037},
   year={2024}
 }
-```
+``` -->
