@@ -124,49 +124,6 @@ for model in model_list:
     global_result[model] = {"completion_memory_usage": completion_memory_usage, "execution_time": execution_time, "max_memory_usage": max_memory_usage, "task_idx": task_idx}
 
 
-common_task_idxs = set.intersection(*model_task_idx_sets)
-
-
-for model in model_list:
-    model_data = global_result[model]
-    filtered_data = {key: {idx: value for idx, value in model_data[key].items() if idx in common_task_idxs} for key in model_data}
-    global_result[model] = filtered_data
-
-    # total_memory_usage = 0
-    # total_execution_time = 0
-    # total_max_memory_usage = 0
-
-    # for key in completion_memory_usage:
-    #     total_memory_usage += completion_memory_usage[key]
-    #     total_execution_time += execution_time[key]
-    #     total_max_memory_usage += max_memory_usage[key]
-
-    # print(f"Total Memory Usage of {model}: {total_memory_usage} MB*seconds")
-    # print(f"Total Execution Time of {model}: {total_execution_time} seconds")
-    # print(f"Total Max Memory Usage of {model}: {total_max_memory_usage} MB")
-
-for model_idx in range(len(model_list)):
-    model = model_list[model_idx]
-    if model == model_list[0]:
-        continue
-    for i in global_result[model]["completion_memory_usage"].keys():
-        if i in global_result[model_list[model_idx-1]]["completion_memory_usage"].keys():
-            if global_result[model_list[model_idx-1]]["completion_memory_usage"][i]<global_result[model]["completion_memory_usage"][i]:
-                global_result[model]["completion_memory_usage"][i] = global_result[model_list[model_idx-1]]["completion_memory_usage"][i]
-                global_result[model]["execution_time"][i] = global_result[model_list[model_idx-1]]["execution_time"][i]
-                global_result[model]["max_memory_usage"][i] = global_result[model_list[model_idx-1]]["max_memory_usage"][i]
-
-for model_idx in range(len(model_list)):
-    model = model_list[model_idx]
-    for i in global_result[model]["completion_memory_usage"].keys():
-        for selfoptimization_idx in range(1,len(model_list)):
-            current_model = model_list[selfoptimization_idx]
-            if i not in global_result[current_model]["completion_memory_usage"].keys():
-                global_result[current_model]["completion_memory_usage"][i] = global_result[model]["completion_memory_usage"][i]
-                global_result[current_model]["execution_time"][i] = global_result[model]["execution_time"][i]
-                global_result[current_model]["max_memory_usage"][i] = global_result[model]["max_memory_usage"][i]
-    break
-
 for model in global_result.keys():
     completion_memory_usage = global_result[model]["completion_memory_usage"]
     execution_time = global_result[model]["execution_time"]
