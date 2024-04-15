@@ -5,6 +5,7 @@ Code generation models have increasingly become integral to aiding software deve
 
 ## :rocket: Updates
 **02/21/2024:** Code released
+**04/15/2024:** HuggingFace: [EffiBench](https://huggingface.co/datasets/DONG19/EffiBench)
 
 ## Installation
 
