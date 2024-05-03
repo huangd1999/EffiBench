@@ -1,0 +1,39 @@
+Please based on the task description write Solution to pass the provided test cases. 
+You must follow the following rules:
+First, the code should be in ```python\n[Code]\n``` block.
+Second, You should not add the provided test cases into your ```\npython[Code]\n``` block.
+Third, You are not need to write the test cases, we will provide the test cases for you.
+Finally, You should make sure that the provided test cases can pass your solution.
+
+Here is a example:
+Example:
+# Task description
+```python
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+Example:
+Given nums = [2, 7, 11, 15], target = 9,
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+```
+
+# Test cases
+```python
+solution = Solution()
+assert solution.twoSum([2, 7, 11, 15], 9) == [[0, 1]]
+```
+
+# Code
+```python
+from typing import *
+import random
+
+class Solution:
+    def twoSum(self, nums, target):
+        hashtable = dict()
+        for i, num in enumerate(nums):
+            if target - num in hashtable:
+                return [hashtable[target - num], i]
+            hashtable[nums[i]] = i
+        return []
+```

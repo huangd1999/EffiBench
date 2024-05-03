@@ -1,3 +1,5 @@
-matplotlib
-numpy
-seaborn
+line_profiler
+memory_profiler
+transformers
+datasets
+accelerate
