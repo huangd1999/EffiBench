@@ -16,20 +16,7 @@ cd EffiBench
 pip install -r requirements.txt
 ```
 
-## code execution to obtain exeuction time and memory usage .dat
-
-```py
-python code_efficiency_calculator.py
-```
-
-## report efficiency metrics
-
-```
-python calculate_memory_usage.py
-```
-
-
-## Evaluation on CrossCodeEval
+## Evaluation on EffiBench
 Our evaluation consists of two steps: generation and metrics calculation.
 
 
