@@ -29,13 +29,60 @@ python calculate_memory_usage.py
 ```
 
 
-<!-- ## :page_facing_up: Citation 
-If you found our work useful or inspiring, please consider citing:
+## Evaluation on CrossCodeEval
+Our evaluation consists of two steps: generation and metrics calculation.
+
+
+### Generation
+
+#### Open-sourced Models
+For open-sourced models like StarCoder, DeepSeek-Coder, etc., we provide batch inference scripts for fast inference on EffiBench. 
+
+```bash
+cd ./src
+mkdir results
+python open_source_model_completion.py \
+  --model codellama/CodeLlama-70b-Instruct-hf 
+```
+
+#### OpenAI models
+OpenAI models are accessible through an API. You may use the following script:
+```bash
+cd ./src
+mkdir results
+python closed_source_model_completion.py \
+  --model gpt-3.5-turbo-0301 
+```
+
+
+### Metrics Calculation
+After obtaining the generation, we can calculate the final metrics
+```bash
+cd ./src
+python code_efficiency_calculator.py \
+  --model gpt-3.5-turbo-0301
+python report_overhead.py \
+  --model gpt-3.5-turbo-0301
+```
+
+
+
+
+## Citation
+
 ```
 @article{huang2024effibench,
   title={EffiBench: Benchmarking the Efficiency of Automatically Generated Code},
-  author={Anomou},
+  author={Huang, Dong and Zhang, Jie M and Qing, Yuhao and Cui, Heming},
   journal={arXiv preprint arXiv:2402.02037},
   year={2024}
 }
-``` -->
+```
+## Questions
+Please feel free to email us (email addresses in the [paper](https://arxiv.org/pdf/2402.02037). You may also submit an issue in this repo.
+
+
+## License
+
+This project is licensed under the Apache-2.0 License.
+
