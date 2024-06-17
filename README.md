@@ -52,7 +52,8 @@ python report_overhead.py \
   --model gpt-3.5-turbo-0301
 ```
 
-
+### Submit Evaluation Request
+[filing a request](https://github.com/huangd1999/EffiBench/issues/new?assignees=&labels=model+eval&projects=&template=model_eval_request.yml&title=%F0%9F%92%A1+%5BREQUEST%5D+-+%3CMODEL_NAME%3E) to add your models on our leaderboard!
 
 
 ## Citation
