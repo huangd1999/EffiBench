@@ -48,8 +48,8 @@ def report_max_memory_usage(dat_file_path):
             max_memory_usage = max(max_memory_usage, mem_in_mb)
         return max_memory_usage
 
-model_list = ["codellama/CodeLlama-70b-Instruct-hf", "gpt-3.5-turbo-0301"]
-canonical_solution_directory = "./dat_results/canonical_solution"
+model_list = ["gpt-3.5-turbo"]
+canonical_solution_directory = "../dat_results/canonical_solution"
 canonical_solution_memory_usage = {}
 canonical_solution_execution_time = {}
 canonical_solution_max_memory_usage = {}
@@ -71,7 +71,7 @@ for model in model_list:
     execution_time = {}
     max_memory_usage = {}
     task_idx = {}
-    dat_directory = f"./dat_results/{model}"
+    dat_directory = f"../dat_results/{model}"
     for dat_file in glob.glob(os.path.join(dat_directory, "*.dat")):
         try:
             problem_idx = os.path.basename(dat_file).split('.')[0]
@@ -86,7 +86,7 @@ for model in model_list:
         "execution_time": execution_time,
         "max_memory_usage": max_memory_usage,
         "task_idx": task_idx
-    }
+        }
 
 for model in global_result.keys():
     completion_memory_usage = global_result[model]["completion_memory_usage"]

@@ -37,8 +37,9 @@ OpenAI models are accessible through an API. You may use the following script:
 ```bash
 cd ./src
 mkdir results
+chmod +x ../scripts/run_code.sh
 python closed_source_model_completion.py \
-  --model gpt-3.5-turbo-0301 
+  --model gpt-3.5-turbo 
 ```
 
 
@@ -47,9 +48,8 @@ After obtaining the generation, we can calculate the final metrics
 ```bash
 cd ./src
 python code_efficiency_calculator.py \
-  --model gpt-3.5-turbo-0301
-python report_overhead.py \
-  --model gpt-3.5-turbo-0301
+  --model gpt-3.5-turbo
+python report_overhead.py # Please specify evaluation model lists in Line 51. You can evaluate several models (e.g., ["deepseek-coder-1.3b-instruct", "gpt-3.5-turbo"])
 ```
 
 ### Submit Evaluation Request
@@ -61,13 +61,13 @@ python report_overhead.py \
 ```
 @article{huang2024effibench,
   title={EffiBench: Benchmarking the Efficiency of Automatically Generated Code},
-  author={Huang, Dong and Zhang, Jie M and Qing, Yuhao and Cui, Heming},
+  author={Huang, Dong and Shang, Weiyi and Qing, Yuhao and Cui, Heming and Zhang, Jie M},
   journal={arXiv preprint arXiv:2402.02037},
   year={2024}
 }
 ```
 ## Questions
-Please feel free to email us (email addresses in the [paper](https://arxiv.org/pdf/2402.02037). You may also submit an issue in this repo.
+Please feel free to email us (email addresses in the [paper](https://arxiv.org/pdf/2402.02037)). You may also submit an issue in this repo.
 
 
 ## License

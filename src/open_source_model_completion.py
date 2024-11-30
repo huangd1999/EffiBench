@@ -1,6 +1,8 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import json
+import argparse
+import os
 from tqdm import tqdm
 
 batch_size = 8
@@ -52,20 +54,23 @@ def fetch_completion(data_entry_lists, model, tokenizer):
     return data_entry_lists
 
 if __name__ == "__main__":
-    checkpoint = "codellama/CodeLlama-70b-Instruct-hf"
+    parser = argparse.ArgumentParser(description='Fetch completions using huggingface model.')
+    parser.add_argument('--model', '-m', type=str, default='codellama/CodeLlama-70b-Instruct-hf', help='Model to use for completion')
+    args = parser.parse_args()
+    model_name = args.model
     with open("../data/dataset.json", "r") as f:
         dataset = json.load(f)
 
     model = AutoModelForCausalLM.from_pretrained(
-        checkpoint, device_map="auto", trust_remote_code=True, torch_dtype=torch.float16
+        model_name, device_map="auto", trust_remote_code=True, torch_dtype=torch.float16
     )
-    tokenizer = AutoTokenizer.from_pretrained(checkpoint, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 
     for i in tqdm(range(0, len(dataset), batch_size)):
         dataset[i : i + batch_size] = fetch_completion(
             dataset[i : i + batch_size], model, tokenizer
         )
 
-    end_name = checkpoint.split("/")[-1]
-    with open(f"./results/{end_name}.json", "w") as f:
+    end_name = model_name.split("/")[-1]
+    with open(f"../results/{end_name}.json", "w") as f:
         json.dump(dataset, f, indent=4)
