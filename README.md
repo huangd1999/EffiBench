@@ -14,6 +14,7 @@ Code generation models have increasingly become integral to aiding software deve
 git clone git@github.com:huangd1999/EffiBench.git
 cd EffiBench
 pip install -r requirements.txt
+chmod +x ./scripts/run_code.sh
 ```
 
 ## Evaluation on EffiBench
@@ -26,8 +27,7 @@ Our evaluation consists of two steps: generation and metrics calculation.
 For open-sourced models like StarCoder, DeepSeek-Coder, etc., we provide batch inference scripts for fast inference on EffiBench. 
 
 ```bash
-cd ./src
-mkdir results
+cd src
 python open_source_model_completion.py \
   --model codellama/CodeLlama-70b-Instruct-hf 
 ```
@@ -35,9 +35,7 @@ python open_source_model_completion.py \
 #### OpenAI models
 OpenAI models are accessible through an API. You may use the following script:
 ```bash
-cd ./src
-mkdir results
-chmod +x ../scripts/run_code.sh
+cd src
 python closed_source_model_completion.py \
   --model gpt-3.5-turbo 
 ```
@@ -46,7 +44,7 @@ python closed_source_model_completion.py \
 ### Metrics Calculation
 After obtaining the generation, we can calculate the final metrics
 ```bash
-cd ./src
+cd src
 python code_efficiency_calculator.py \
   --model gpt-3.5-turbo
 python report_overhead.py # Please specify evaluation model lists in Line 51. You can evaluate several models (e.g., ["deepseek-coder-1.3b-instruct", "gpt-3.5-turbo"])
