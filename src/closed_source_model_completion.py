@@ -7,8 +7,7 @@ import copy
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Setting API parameters
-openai.api_base = "https://api.aiohub.org/v1"
-openai.api_key = 'sk-f4SIHtjTEk0rhtG35948D0444bBc4711B695Eb34CfF802D7'
+openai.api_key = 'API'
 
 with open("../prompts/prompt.txt", "r") as f:
     text = f.read()
